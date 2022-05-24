@@ -1,0 +1,16 @@
+{
+    "name": "UaaLExample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:5c80fd5863c644a97a5bf537b90fcd8a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
