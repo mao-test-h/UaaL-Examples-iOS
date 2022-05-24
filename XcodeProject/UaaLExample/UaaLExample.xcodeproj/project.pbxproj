@@ -11,6 +11,7 @@
 		34D7230B283D2A65001E3C7F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D7230A283D2A65001E3C7F /* ContentView.swift */; };
 		34D7230D283D2A68001E3C7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34D7230C283D2A68001E3C7F /* Assets.xcassets */; };
 		34D72310283D2A68001E3C7F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34D7230F283D2A68001E3C7F /* Preview Assets.xcassets */; };
+		34D7232A283D661B001E3C7F /* Unity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D72329283D661B001E3C7F /* Unity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,8 @@
 		34D7230A283D2A65001E3C7F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		34D7230C283D2A68001E3C7F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		34D7230F283D2A68001E3C7F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		34D72326283D6602001E3C7F /* UaaLExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UaaLExample-Bridging-Header.h"; sourceTree = "<group>"; };
+		34D72329283D661B001E3C7F /* Unity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,9 +54,11 @@
 		34D72307283D2A65001E3C7F /* UaaLExample */ = {
 			isa = PBXGroup;
 			children = (
+				34D7230C283D2A68001E3C7F /* Assets.xcassets */,
+				34D72326283D6602001E3C7F /* UaaLExample-Bridging-Header.h */,
 				34D72308283D2A65001E3C7F /* UaaLExampleApp.swift */,
 				34D7230A283D2A65001E3C7F /* ContentView.swift */,
-				34D7230C283D2A68001E3C7F /* Assets.xcassets */,
+				34D72329283D661B001E3C7F /* Unity.swift */,
 				34D7230E283D2A68001E3C7F /* Preview Content */,
 			);
 			path = UaaLExample;
@@ -99,6 +104,7 @@
 				TargetAttributes = {
 					34D72304283D2A65001E3C7F = {
 						CreatedOnToolsVersion = 13.4;
+						LastSwiftMigration = 1340;
 					};
 				};
 			};
@@ -138,6 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34D7230B283D2A65001E3C7F /* ContentView.swift in Sources */,
+				34D7232A283D661B001E3C7F /* Unity.swift in Sources */,
 				34D72309283D2A65001E3C7F /* UaaLExampleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,6 +271,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"UaaLExample/Preview Content\"";
@@ -283,6 +291,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.mao.uaal-examples.UaaLExample";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "UaaLExample/UaaLExample-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -293,6 +303,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"UaaLExample/Preview Content\"";
@@ -312,6 +323,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.mao.uaal-examples.UaaLExample";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "UaaLExample/UaaLExample-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
