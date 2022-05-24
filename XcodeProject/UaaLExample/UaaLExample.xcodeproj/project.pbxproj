@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		34C43AD9283D908900CBDFD6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C43AD8283D908900CBDFD6 /* MainView.swift */; };
 		34C43ADB283D909100CBDFD6 /* UnityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C43ADA283D909100CBDFD6 /* UnityView.swift */; };
+		34C43ADF283D918D00CBDFD6 /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34C43ADD283D918D00CBDFD6 /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		34D7233D283D6A9A001E3C7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D7233C283D6A9A001E3C7F /* AppDelegate.swift */; };
 		34D72346283D6A9C001E3C7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34D72345283D6A9C001E3C7F /* Assets.xcassets */; };
 		34D72349283D6A9C001E3C7F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34D72347283D6A9C001E3C7F /* LaunchScreen.storyboard */; };
@@ -16,9 +17,24 @@
 		34D72356283D6DA1001E3C7F /* Unity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D72355283D6DA1001E3C7F /* Unity.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		34C43AE0283D918D00CBDFD6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				34C43ADF283D918D00CBDFD6 /* UnityFramework.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		34C43AD8283D908900CBDFD6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		34C43ADA283D909100CBDFD6 /* UnityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnityView.swift; sourceTree = "<group>"; };
+		34C43ADD283D918D00CBDFD6 /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		34D72339283D6A9A001E3C7F /* UaaLExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UaaLExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34D7233C283D6A9A001E3C7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34D72345283D6A9C001E3C7F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -57,11 +73,20 @@
 			path = SwiftUI;
 			sourceTree = "<group>";
 		};
+		34C43ADC283D918D00CBDFD6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				34C43ADD283D918D00CBDFD6 /* UnityFramework.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		34D72330283D6A9A001E3C7F = {
 			isa = PBXGroup;
 			children = (
 				34D7233B283D6A9A001E3C7F /* UaaLExample */,
 				34D7233A283D6A9A001E3C7F /* Products */,
+				34C43ADC283D918D00CBDFD6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,6 +123,7 @@
 				34D72335283D6A9A001E3C7F /* Sources */,
 				34D72336283D6A9A001E3C7F /* Frameworks */,
 				34D72337283D6A9A001E3C7F /* Resources */,
+				34C43AE0283D918D00CBDFD6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
