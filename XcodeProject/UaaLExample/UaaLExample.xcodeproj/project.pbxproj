@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34C43AD9283D908900CBDFD6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C43AD8283D908900CBDFD6 /* MainView.swift */; };
+		34C43ADB283D909100CBDFD6 /* UnityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C43ADA283D909100CBDFD6 /* UnityView.swift */; };
 		34D7233D283D6A9A001E3C7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D7233C283D6A9A001E3C7F /* AppDelegate.swift */; };
 		34D72346283D6A9C001E3C7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34D72345283D6A9C001E3C7F /* Assets.xcassets */; };
 		34D72349283D6A9C001E3C7F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34D72347283D6A9C001E3C7F /* LaunchScreen.storyboard */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		34C43AD8283D908900CBDFD6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		34C43ADA283D909100CBDFD6 /* UnityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnityView.swift; sourceTree = "<group>"; };
 		34D72339283D6A9A001E3C7F /* UaaLExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UaaLExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34D7233C283D6A9A001E3C7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34D72345283D6A9C001E3C7F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -36,6 +40,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		34C43AD6283D906A00CBDFD6 /* UaaL */ = {
+			isa = PBXGroup;
+			children = (
+				34D72355283D6DA1001E3C7F /* Unity.swift */,
+			);
+			path = UaaL;
+			sourceTree = "<group>";
+		};
+		34C43AD7283D907400CBDFD6 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				34C43AD8283D908900CBDFD6 /* MainView.swift */,
+				34C43ADA283D909100CBDFD6 /* UnityView.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
 		34D72330283D6A9A001E3C7F = {
 			isa = PBXGroup;
 			children = (
@@ -55,9 +76,10 @@
 		34D7233B283D6A9A001E3C7F /* UaaLExample */ = {
 			isa = PBXGroup;
 			children = (
+				34C43AD7283D907400CBDFD6 /* SwiftUI */,
+				34C43AD6283D906A00CBDFD6 /* UaaL */,
 				34D72345283D6A9C001E3C7F /* Assets.xcassets */,
 				34D7233C283D6A9A001E3C7F /* AppDelegate.swift */,
-				34D72355283D6DA1001E3C7F /* Unity.swift */,
 				34D72350283D6C9C001E3C7F /* MainViewController.swift */,
 				34D72347283D6A9C001E3C7F /* LaunchScreen.storyboard */,
 				34D7234A283D6A9C001E3C7F /* Info.plist */,
@@ -137,7 +159,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34C43ADB283D909100CBDFD6 /* UnityView.swift in Sources */,
 				34D7233D283D6A9A001E3C7F /* AppDelegate.swift in Sources */,
+				34C43AD9283D908900CBDFD6 /* MainView.swift in Sources */,
 				34D72356283D6DA1001E3C7F /* Unity.swift in Sources */,
 				34D72351283D6C9C001E3C7F /* MainViewController.swift in Sources */,
 			);

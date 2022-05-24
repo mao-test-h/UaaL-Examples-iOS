@@ -3,7 +3,11 @@ import Foundation
 final class Unity: NSObject {
     static let shared = Unity()
     private let unityFramework: UnityFramework
-    private var delegate: NativeCallsProtocol? = nil
+    private var onReadyHandler: (() -> Void)? = nil
+
+    // NOTE: アプリ固有機能
+    var intensityDelegate: IntensityDelegate? = nil
+    private var onChangeIntensityDelegate: OnChangeIntensityDelegate? = nil
 
     var view: UIView {
         unityFramework.appController().rootView!
@@ -59,15 +63,16 @@ final class Unity: NSObject {
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?,
-        delegate: NativeCallsProtocol) {
+        onReadyHandler: @escaping () -> Void) {
+
+        self.onReadyHandler = onReadyHandler
 
         // Set UnityFramework target for Unity-iPhone/Data folder to make Data part of a UnityFramework.framework and uncomment call to setDataBundleId
         // ODR is not supported in this case, ( if you need embedded and ODR you need to copy data )
         unityFramework.setDataBundleId("com.unity3d.framework")
         unityFramework.register(self)
-        FrameworkLibAPI.registerAPIforNativeCalls(delegate)
+        FrameworkLibAPI.registerAPIforNativeCalls(self)
         unityFramework.runEmbedded(withArgc: CommandLine.argc, argv: CommandLine.unsafeArgv, appLaunchOpts: launchOptions)
-        self.delegate = delegate
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -96,5 +101,34 @@ extension Unity: UnityFrameworkListener {
     }
 
     func unityDidQuit(_ notification: Notification) {
+    }
+}
+
+extension Unity: NativeCallsProtocol {
+    func onReady() {
+        onReadyHandler?()
+    }
+
+    func onChangeIntensityFromUnity(_ intensity: Float32) {
+        intensityDelegate?.onChangeIntensityFromUnity(intensity)
+    }
+
+    func registerDelegate(_ delegate: @escaping OnChangeIntensityDelegate) {
+        onChangeIntensityDelegate = delegate
+    }
+}
+
+// MARK:- アプリ固有機能
+
+protocol IntensityDelegate {
+    /// intensityの変更通知 [Unity -> Native]
+    func onChangeIntensityFromUnity(_ intensity: Float32)
+}
+
+
+extension Unity {
+    /// intensityの設定 (Native -> Unity)
+    func setIntensity(with intensity: Float32) {
+        onChangeIntensityDelegate?(intensity)
     }
 }
