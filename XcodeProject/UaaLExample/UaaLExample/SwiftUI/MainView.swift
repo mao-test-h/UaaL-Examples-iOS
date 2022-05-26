@@ -8,17 +8,17 @@ struct MainView: View {
     }
 
     var body: some View {
-        ZStack {
-            UnityView()
-            VStack() {
+        GeometryReader { gr in
+            VStack {
+                Spacer()
                 Slider(value: $state.intensity, in: 0...1)
-                    .background(Rectangle().fill(.white))
                     .padding(.leading, 32)
                     .padding(.trailing, 32)
-                    .padding(.top, 129)
+                Spacer()
+                UnityView()
+                    .frame(width: gr.size.width / 1.5, height: gr.size.height / 1.5)
                 Spacer()
             }
-            .frame(alignment: .top)
         }
     }
 }
