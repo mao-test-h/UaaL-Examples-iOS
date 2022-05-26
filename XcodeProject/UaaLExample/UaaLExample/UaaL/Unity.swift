@@ -7,7 +7,7 @@ final class Unity: NSObject {
 
     // NOTE: アプリ固有機能
     var intensityDelegate: IntensityDelegate? = nil
-    private var onChangeIntensityDelegate: OnChangeIntensityDelegate? = nil
+    private var onChangeIntensityDelegate: ((Double) -> Void)? = nil
 
     var view: UIView {
         unityFramework.appController().rootView!
@@ -113,8 +113,10 @@ extension Unity: NativeCallsProtocol {
         intensityDelegate?.onChangeIntensityFromUnity(intensity)
     }
 
-    func registerDelegate(_ delegate: @escaping OnChangeIntensityDelegate) {
-        onChangeIntensityDelegate = delegate
+    func registerChangeIntensityDelegate(_ delegate: @escaping (Float32) -> Void) {
+        onChangeIntensityDelegate = { value in
+            delegate(Float32(value))
+        }
     }
 }
 
@@ -128,7 +130,7 @@ protocol IntensityDelegate {
 
 extension Unity {
     /// intensityの設定 (Native -> Unity)
-    func setIntensity(with intensity: Float32) {
+    func setIntensity(with intensity: Double) {
         onChangeIntensityDelegate?(intensity)
     }
 }
