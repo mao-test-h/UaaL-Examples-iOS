@@ -26,7 +26,7 @@ final class MainViewController: UIViewController {
 
         // Data binding.
         viewState.$intensity.sink { value in
-                Unity.shared.setIntensity(with: Float32(value))
+                Unity.shared.setIntensity(with: value)
             }
             .store(in: &cancellableSet)
 
