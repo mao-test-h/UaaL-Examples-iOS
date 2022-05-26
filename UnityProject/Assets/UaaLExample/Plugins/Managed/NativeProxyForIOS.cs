@@ -8,7 +8,7 @@ namespace UaaLExample.Plugins.Managed
     {
         public NativeProxyIOS()
         {
-            RegisterDelegate(CallChangeIntensity);
+            RegisterChangeIntensityDelegate(CallChangeIntensity);
         }
 
         public event Action<float> OnChangeIntensityFromNative
@@ -33,14 +33,14 @@ namespace UaaLExample.Plugins.Managed
             OnChangeIntensityInternal?.Invoke(intensity);
         }
 
-        [DllImport("__Internal", EntryPoint = "ready")]
+        [DllImport("__Internal", EntryPoint = "callReady")]
         static extern void CallReady();
 
-        [DllImport("__Internal", EntryPoint = "setIntensity")]
+        [DllImport("__Internal", EntryPoint = "callSetIntensity")]
         static extern void CallSetIntensity(Single intensity);
 
-        [DllImport("__Internal", EntryPoint = "registerDelegate")]
-        static extern void RegisterDelegate(
+        [DllImport("__Internal", EntryPoint = "callRegisterChangeIntensityDelegate")]
+        static extern void RegisterChangeIntensityDelegate(
             [MarshalAs(UnmanagedType.FunctionPtr)] OnChangeIntensityDelegate @delegate);
     }
 }

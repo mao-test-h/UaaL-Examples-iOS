@@ -1,8 +1,5 @@
 import Foundation
 
-/// ネイティブ側からintensityの設定を適用するための関数ポインタ
-public typealias OnChangeIntensityDelegate = @convention(c) (Float32) -> Void
-
 public protocol NativeCallsProtocol {
     /// Unityのセットアップ完了通知 [Unity -> Native]
     func onReady()
@@ -10,8 +7,9 @@ public protocol NativeCallsProtocol {
     /// intensityの設定 [Unity -> Native]
     func onChangeIntensityFromUnity(_ intensity: Float32)
 
-    /// 関数ポインタの登録
-    func registerDelegate(_ delegate: @escaping OnChangeIntensityDelegate)
+    /// intensityの設定 [Native -> Unity]
+    /// NOTE: ネイティブからintensityの設定を適用する際に呼び出すデリゲートの登録
+    func registerChangeIntensityDelegate(_ delegate: @escaping (Float32) -> Void)
 }
 
 public final class FrameworkLibAPI {
@@ -24,17 +22,20 @@ public final class FrameworkLibAPI {
 
 // MARK:- P/Invoke
 
-@_cdecl("ready")
-func ready() {
+/// ネイティブからintensityの設定を適用する際に呼び出す関数ポインタ
+typealias OnChangeIntensityDelegate = @convention(c) (Float32) -> Void
+
+@_cdecl("callReady")
+func callReady() {
     FrameworkLibAPI.api?.onReady()
 }
 
-@_cdecl("setIntensity")
-func setIntensity(_ intensity: Float32) {
+@_cdecl("callSetIntensity")
+func callSetIntensity(_ intensity: Float32) {
     FrameworkLibAPI.api?.onChangeIntensityFromUnity(intensity)
 }
 
-@_cdecl("registerDelegate")
-public func registerDelegate(_ delegate: @escaping OnChangeIntensityDelegate) {
-    FrameworkLibAPI.api?.registerDelegate(delegate)
+@_cdecl("callRegisterChangeIntensityDelegate")
+func callRegisterChangeIntensityDelegate(_ delegate: @escaping OnChangeIntensityDelegate) {
+    FrameworkLibAPI.api?.registerChangeIntensityDelegate(delegate)
 }
