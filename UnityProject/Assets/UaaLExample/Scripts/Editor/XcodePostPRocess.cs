@@ -24,6 +24,9 @@ namespace UaaLExample.Editor
             var resPhaseGuid = project.GetResourcesBuildPhaseByTarget(targetGuid);
             project.AddFileToBuildSection(targetGuid, resPhaseGuid, dataPathGuid);
 
+            // Swift version
+            project.SetBuildProperty(targetGuid, "SWIFT_VERSION", "5.0");
+
             project.WriteToFile(projectPath);
         }
     }
