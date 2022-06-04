@@ -19,8 +19,8 @@ OUTPUT_PATH="${CURRENT_DIR}/Builds"
 
 # https://docs.unity3d.com/Manual/EditorCommandLineArguments.html
 ${UNITY_EDITOR_PATH} -batchmode \
-    -nographics	\
-    -silent-crashes	\
+    -nographics \
+    -silent-crashes \
     -quit \
     -buildTarget iOS \
     -projectPath ${CURRENT_DIR} \
