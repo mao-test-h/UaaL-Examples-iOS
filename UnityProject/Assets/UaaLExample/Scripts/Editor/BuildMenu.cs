@@ -9,49 +9,61 @@ namespace UaaLExample.Editor
     static class BuildMenu
     {
         /// <summary>
-        /// iOS向けにDeviceSDKとSimulatorSDKの両方のビルドを作る
+        /// iOSビルドの実行(Device/Simulator)
         /// </summary>
-        [MenuItem("Build/Build for iOS")]
-        static void BuildForIOS()
+        [MenuItem("Build/Build iOS (Device & Simulator)")]
+        static void BuildIOSForBoth()
         {
-            var buildsPath = Application.dataPath + "/../Builds/";
-            CheckAndCreateDirectory(buildsPath);
-
-            var ret = BuildForIOSInternal(buildsPath, iOSSdkVersion.SimulatorSDK);
-            if (!ret) return;
-
-            ret = BuildForIOSInternal(buildsPath, iOSSdkVersion.DeviceSDK);
-            if (!ret) return;
-
-            Debug.Log("<color=green>Complete Build For iOS</color>");
-        }
-
-        static bool BuildForIOSInternal(string buildsPath, iOSSdkVersion sdkVersion)
-        {
-            PlayerSettings.iOS.sdkVersion = sdkVersion;
-
-            var buildPath = buildsPath + sdkVersion.ToString();
-            CheckAndCreateDirectory(buildPath);
-
-            var buildOptions = new BuildPlayerOptions
+            var ret = BuildUtility.BuildIOSInternal(iOSSdkVersion.SimulatorSDK);
+            if (!ret)
             {
-                scenes = GetScenePaths,
-                target = BuildTarget.iOS,
-                targetGroup = BuildTargetGroup.iOS,
-                locationPathName = buildPath,
-                options = BuildOptions.None,
-            };
-
-            var result = BuildPipeline.BuildPlayer(buildOptions);
-            if (result.summary.result == BuildResult.Succeeded)
-            {
-                return true;
+                return;
             }
 
-            Debug.LogError($"Build Failed : {sdkVersion.ToString()}");
-            return false;
+            ret = BuildUtility.BuildIOSInternal(iOSSdkVersion.DeviceSDK);
+            if (!ret)
+            {
+                return;
+            }
+
+            Debug.Log("<color=green>Build iOS (Device/Simulator)</color>");
+        }
+    }
+
+    // `-batchmode`向けのメソッド
+    static class BatchBuild
+    {
+        /// <summary>
+        /// iOSビルドの実行(Device)
+        /// </summary>
+        static void BuildIOSForDevice()
+        {
+            var ret = BuildUtility.BuildIOSInternal(iOSSdkVersion.DeviceSDK);
+            if (!ret)
+            {
+                return;
+            }
+
+            Debug.Log("<color=green>Build iOS (Device/Simulator)</color>");
         }
 
+        /// <summary>
+        /// iOSビルドの実行(Simulator)
+        /// </summary>
+        static void BuildIOSForSimulator()
+        {
+            var ret = BuildUtility.BuildIOSInternal(iOSSdkVersion.SimulatorSDK);
+            if (!ret)
+            {
+                return;
+            }
+
+            Debug.Log("<color=green>Build iOS (Device/Simulator)</color>");
+        }
+    }
+
+    static class BuildUtility
+    {
         static string[] GetScenePaths
         {
             get
@@ -66,10 +78,51 @@ namespace UaaLExample.Editor
             }
         }
 
-        static void CheckAndCreateDirectory(string path)
+        internal static bool BuildIOSInternal(iOSSdkVersion sdkVersion)
         {
+            // これを変えるとビルドする度にPlayerSettingsが更新されて差分が発生するので、終わったら元の値に戻すようにしておく
+            var currentSdkVersion = PlayerSettings.iOS.sdkVersion;
+            PlayerSettings.iOS.sdkVersion = sdkVersion;
+
+            void CompleteAction()
+            {
+                PlayerSettings.iOS.sdkVersion = currentSdkVersion;
+                AssetDatabase.Refresh();
+                AssetDatabase.SaveAssets();
+            }
+
+            // `./Builds`フォルダのチェック
+            var buildsPath = Application.dataPath + "/../Builds/";
+            CheckAndCreateDirectory(buildsPath, deleteIfExists: false);
+
             // このサンプルでは既存のビルドを破棄してReplace相当の処理を行うようにする
-            if (Directory.Exists(path))
+            var buildPath = buildsPath + sdkVersion.ToString();
+            CheckAndCreateDirectory(buildPath, deleteIfExists: true);
+
+            var buildOptions = new BuildPlayerOptions
+            {
+                scenes = GetScenePaths,
+                target = BuildTarget.iOS,
+                locationPathName = buildPath,
+                options = BuildOptions.None,
+            };
+
+            var result = BuildPipeline.BuildPlayer(buildOptions);
+            if (result.summary.result == BuildResult.Succeeded)
+            {
+                CompleteAction();
+                return true;
+            }
+
+            Debug.LogError($"Build Failed : {sdkVersion.ToString()}");
+            CompleteAction();
+            return false;
+        }
+
+
+        static void CheckAndCreateDirectory(string path, bool deleteIfExists)
+        {
+            if (deleteIfExists && Directory.Exists(path))
             {
                 Directory.Delete(path);
             }
