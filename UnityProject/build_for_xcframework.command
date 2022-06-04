@@ -3,14 +3,32 @@
 # UnityからビルドしたiOSの実機&シミュレーター向けのビルドから`.xcframework`のビルドを行う
 # 参考: https://qiita.com/tfactory/items/34f9d88f014c47221617
 
+# UnityEditorのパス
+UNITY_EDITOR_PATH="/Applications/Unity/Hub/Editor/2021.3.3f1/Unity.app/Contents/MacOS/Unity"
+
 #----------------
 CURRENT_DIR=`dirname $0`
 cd $CURRENT_DIR
 
-# 出力先
+# ビルド結果の出力先
 OUTPUT_PATH="${CURRENT_DIR}/Builds"
 
-# Unityからビルドした各種`.xcodeproj`のパス
+
+
+# 1. UnityのiOSビルドを実行して実機&シミュレーター向けの2つの`Unity-iPhone.xcodeproj`を生成
+
+# https://docs.unity3d.com/Manual/EditorCommandLineArguments.html
+${UNITY_EDITOR_PATH} -batchmode \
+    -nographics	\
+    -silent-crashes	\
+    -quit \
+    -buildTarget iOS \
+    -projectPath ${CURRENT_DIR} \
+    -executeMethod UaaLExample.Editor.BuildMenu.BuildIOSForAllSDK
+
+osascript -e 'display notification "Success Build UnityProject" sound name "Bip"'
+
+# ビルドに成功して両方の`Unity-iPhone.xcodeproj`が生成されているかチェック
 DEVICE_BUILD_PATH="${OUTPUT_PATH}/DeviceSDK/Unity-iPhone.xcodeproj"
 SIMULATOR_BUILD_PATH="${OUTPUT_PATH}/SimulatorSDK/Unity-iPhone.xcodeproj"
 
@@ -26,7 +44,7 @@ fi
 
 
 
-# 1. `.xcodeproj`から`.xcarchive`をビルド
+# 2. ビルドした`.xcodeproj`から`.xcarchive`をビルド
 
 DEVICE_BUILD_ARCHIVE_PATH="${OUTPUT_PATH}/UnityFramework-Device.xcarchive"
 SIMULATOR_BUILD_ARCHIVE_PATH="${OUTPUT_PATH}/UnityFramework-Simulator.xcarchive"
@@ -61,14 +79,14 @@ osascript -e 'display notification "Success Build UnityFramework-Simulator.xcarc
 
 
 
-# 2. `.xcarchive`から`.xcframework`をビルド
+# 3. `.xcarchive`から`.xcframework`をビルド
 
 XCFRAMEWORK_PATH="${OUTPUT_PATH}/UnityFramework.xcframework"
 
 # 前回のビルド結果が残っている場合には先に削除
 rm -rfv ${XCFRAMEWORK_PATH}
 
-# 1の手順でビルドした実機&シミュレーター向けのxcarchiveから`.xcframework`をビルド
+# 2の手順でビルドした実機&シミュレーター向けの`.xcarchive`から`.xcframework`をビルド
 xcodebuild -create-xcframework \
     -framework "${DEVICE_BUILD_ARCHIVE_PATH}/Products/Library/Frameworks/UnityFramework.framework" \
     -framework "${SIMULATOR_BUILD_ARCHIVE_PATH}/Products/Library/Frameworks/UnityFramework.framework" \
@@ -78,7 +96,7 @@ osascript -e 'display notification "Success Build UnityFramework.xcframework" so
 
 
 
-# 3. [BUILD_LIBRARY_FOR_DISTRIBUTION]を有効にしている都合で、このままだと`UnityFramework.xcframework`を組み込んだ際にエラーが発生するので対策
+# 4. [BUILD_LIBRARY_FOR_DISTRIBUTION]を有効にしている都合で、このままだと`UnityFramework.xcframework`を組み込んだ際にエラーが発生するので対策
 # 参考: https://developer.apple.com/forums/thread/123253
 
 cd ${XCFRAMEWORK_PATH}
@@ -90,7 +108,6 @@ find . -name "*.swiftinterface" -exec sed -i -e 's/UnityFramework\.//g' {} \;
 find . -name "*.swiftinterface-e" -exec rm -f {} \;
 
 osascript -e 'display notification "Fix \".swiftinterface\" in xcframework" sound name "Bip"'
-
 
 
 return 0

@@ -12,33 +12,15 @@ namespace UaaLExample.Editor
         /// iOSビルドの実行(Device/Simulator)
         /// </summary>
         [MenuItem("Build/Build iOS (Device & Simulator)")]
-        static void BuildIOSForBoth()
+        static void BuildIOSForAllSDK()
         {
-            var ret = BuildUtility.BuildIOSInternal(iOSSdkVersion.SimulatorSDK);
+            var ret = BuildIOSInternal(iOSSdkVersion.SimulatorSDK);
             if (!ret)
             {
                 return;
             }
 
-            ret = BuildUtility.BuildIOSInternal(iOSSdkVersion.DeviceSDK);
-            if (!ret)
-            {
-                return;
-            }
-
-            Debug.Log("<color=green>Build iOS (Device/Simulator)</color>");
-        }
-    }
-
-    // `-batchmode`向けのメソッド
-    static class BatchBuild
-    {
-        /// <summary>
-        /// iOSビルドの実行(Device)
-        /// </summary>
-        static void BuildIOSForDevice()
-        {
-            var ret = BuildUtility.BuildIOSInternal(iOSSdkVersion.DeviceSDK);
+            ret = BuildIOSInternal(iOSSdkVersion.DeviceSDK);
             if (!ret)
             {
                 return;
@@ -47,23 +29,6 @@ namespace UaaLExample.Editor
             Debug.Log("<color=green>Build iOS (Device/Simulator)</color>");
         }
 
-        /// <summary>
-        /// iOSビルドの実行(Simulator)
-        /// </summary>
-        static void BuildIOSForSimulator()
-        {
-            var ret = BuildUtility.BuildIOSInternal(iOSSdkVersion.SimulatorSDK);
-            if (!ret)
-            {
-                return;
-            }
-
-            Debug.Log("<color=green>Build iOS (Device/Simulator)</color>");
-        }
-    }
-
-    static class BuildUtility
-    {
         static string[] GetScenePaths
         {
             get
@@ -78,7 +43,7 @@ namespace UaaLExample.Editor
             }
         }
 
-        internal static bool BuildIOSInternal(iOSSdkVersion sdkVersion)
+        static bool BuildIOSInternal(iOSSdkVersion sdkVersion)
         {
             // これを変えるとビルドする度にPlayerSettingsが更新されて差分が発生するので、終わったら元の値に戻すようにしておく
             var currentSdkVersion = PlayerSettings.iOS.sdkVersion;
