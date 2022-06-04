@@ -18,10 +18,10 @@ final class MainViewController: UIViewController {
         view.addSubview(mainView)
         mainView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            mainView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            mainView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
-            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: mainView.bottomAnchor)
+            mainView.topAnchor.constraint(equalTo: view.topAnchor),
+            mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: mainView.bottomAnchor)
         ])
 
         // Data binding.
