@@ -27,6 +27,17 @@ namespace UaaLExample.Editor
             // Swift version
             project.SetBuildProperty(targetGuid, "SWIFT_VERSION", "5.0");
 
+            // NOTE: iOS Simulatorのエラー対策
+            if (PlayerSettings.iOS.sdkVersion == iOSSdkVersion.SimulatorSDK)
+            {
+                var removeLdFlags = new[]
+                {
+                    "-Wl,-undefined,dynamic_lookup",
+                    "-Wl,-exported_symbol,_il2cpp_*"
+                };
+                project.UpdateBuildProperty(targetGuid, "OTHER_LDFLAGS", new string[] { }, removeLdFlags);
+            }
+
             project.WriteToFile(projectPath);
         }
     }
