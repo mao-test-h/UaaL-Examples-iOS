@@ -2,8 +2,8 @@
 
 **バージョン**
 
-- Unity 2021.3.3f1
-- Xcode 13.4
+- Unity 2021.3.4f1
+- Xcode 13.4.1
 
 # 動作確認手順について
 
@@ -21,3 +21,8 @@ Unity側のビルドを含んでいる`UnityFramework.xcframework`はサイズ�
 2. 成功したら`./UnityProject/Builds`以下に`UnityFramework.xcframework`が出来上がるので、それを`./XcodeProject/UaaLExample`以下にコピー
 
 あとは`./XcodeProject/UaaLExample.xcworkspace`を開いてBuild & Runすれば実機 or シミュレーターのどちらでも動くはず
+
+
+## ※Apple Silicon搭載のMacで動かす場合には
+
+Simulator実行時には**XcodeをRosetta経由で実行しておく**必要があります。
