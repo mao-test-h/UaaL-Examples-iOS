@@ -20,3 +20,7 @@ Unity側のビルド(`UnityFramework`)はサイズが大きいためにバージ
 
 Unity側のビルドが完了したら`./XcodeProject/UaaLExample.xcworkspace`を開き、2の選択に応じて実行する端末 or シミュレーターを選択した上でBuild & Runすることで動くはず
 
+
+## ※Apple Silicon搭載のmacなら
+
+Apple Silicon搭載機の場合、Simulator実行時には**XcodeをRosetta経由で実行しておく必要があります。**
