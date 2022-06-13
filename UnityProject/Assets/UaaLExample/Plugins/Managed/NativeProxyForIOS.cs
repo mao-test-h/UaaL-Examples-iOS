@@ -8,7 +8,7 @@ namespace UaaLExample.Plugins.Managed
     {
         public NativeProxyIOS()
         {
-            RegisterChangeIntensityDelegate(CallChangeIntensity);
+            RegisterChangeIntensityDelegate();
         }
 
         public event Action<float> OnChangeIntensityFromNative
@@ -17,31 +17,43 @@ namespace UaaLExample.Plugins.Managed
             remove => OnChangeIntensityInternal -= value;
         }
 
-        public void Ready() => CallReady();
-
-        public void SetIntensity(float intensity) => CallSetIntensity(intensity);
-
-
-        static event Action<float> OnChangeIntensityInternal = null;
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        delegate void OnChangeIntensityDelegate([MarshalAs(UnmanagedType.R4)] Single intensity);
-
-        [AOT.MonoPInvokeCallbackAttribute(typeof(OnChangeIntensityDelegate))]
-        static void CallChangeIntensity(Single intensity)
+        public void Ready()
         {
-            OnChangeIntensityInternal?.Invoke(intensity);
+            [DllImport("__Internal", EntryPoint = "callReady")]
+            static extern void CallReady();
+
+            CallReady();
         }
 
-        [DllImport("__Internal", EntryPoint = "callReady")]
-        static extern void CallReady();
+        public void SetIntensity(float intensity)
+        {
+            [DllImport("__Internal", EntryPoint = "callSetIntensity")]
+            static extern void CallSetIntensity(Single intensity);
 
-        [DllImport("__Internal", EntryPoint = "callSetIntensity")]
-        static extern void CallSetIntensity(Single intensity);
+            CallSetIntensity(intensity);
+        }
 
-        [DllImport("__Internal", EntryPoint = "callRegisterChangeIntensityDelegate")]
-        static extern void RegisterChangeIntensityDelegate(
-            [MarshalAs(UnmanagedType.FunctionPtr)] OnChangeIntensityDelegate @delegate);
+        static void RegisterChangeIntensityDelegate()
+        {
+            [AOT.MonoPInvokeCallbackAttribute(typeof(OnChangeIntensityDelegate))]
+            static void CallChangeIntensity(Single intensity)
+            {
+                OnChangeIntensityInternal?.Invoke(intensity);
+            }
+
+            [DllImport("__Internal", EntryPoint = "callRegisterChangeIntensityDelegate")]
+            static extern void CallRegisterChangeIntensityDelegate(
+                [MarshalAs(UnmanagedType.FunctionPtr)] OnChangeIntensityDelegate @delegate);
+
+            CallRegisterChangeIntensityDelegate(CallChangeIntensity);
+        }
+
+        // ネイティブから呼び出されるコールバック
+        static event Action<float> OnChangeIntensityInternal = null;
+
+        // 関数ポインタとの変換用デリゲート
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        delegate void OnChangeIntensityDelegate([MarshalAs(UnmanagedType.R4)] Single intensity);
     }
 }
 #endif
