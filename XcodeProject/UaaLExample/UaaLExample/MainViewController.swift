@@ -10,7 +10,8 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let mainViewController = UIHostingController(rootView: MainView(with: viewState))
+        let rootView = MainView(with: viewState)
+        let mainViewController = UIHostingController(rootView: rootView)
         guard let mainView = mainViewController.view else {
             return
         }
