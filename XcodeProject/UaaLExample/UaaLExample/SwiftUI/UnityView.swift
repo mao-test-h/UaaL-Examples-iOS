@@ -10,18 +10,18 @@ final class UnityViewState: ObservableObject {
 struct UnityView: UIViewRepresentable {
 
     // UnityViewの表示状態
-    private let unityViewEnvironment: UnityViewState
+    private let unityViewState: UnityViewState
 
     // UnityViewを中継するためのView
     private let parentView = UIView()
 
-    init(with unityViewEnvironment: UnityViewState) {
-        self.unityViewEnvironment = unityViewEnvironment
+    init(with unityViewState: UnityViewState) {
+        self.unityViewState = unityViewState
     }
 
     func makeUIView(context: Context) -> some UIView {
         // `isPresenting`に応じてUaaLを表示するときのみ`parentView`の階層にぶら下げるようにする
-        unityViewEnvironment.$isPresenting
+        unityViewState.$isPresenting
             .sink {
                 if $0 {
                     let unity = unityView
@@ -35,7 +35,7 @@ struct UnityView: UIViewRepresentable {
                     ])
                 } else {
                     // 非表示時には階層から外しておく
-                    Unity.shared.view.removeFromSuperview()
+                    unityView.removeFromSuperview()
                 }
             }
             .store(in: &context.coordinator.cancellable)
