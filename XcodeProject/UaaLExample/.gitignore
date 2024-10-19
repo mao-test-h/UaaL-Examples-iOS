@@ -91,3 +91,7 @@ iOSInjectionProject/
 
 # JetBrains AppCode
 .idea/
+
+# UnityFramework.xcframework
+# NOTE: サイズ的にバージョン管理したくないのでignoreに入れているだけ
+UnityFramework.xcframework
