@@ -4,7 +4,7 @@
 # 参考: https://qiita.com/tfactory/items/34f9d88f014c47221617
 
 # UnityEditorのパス
-UNITY_EDITOR_PATH="/Applications/Unity/Hub/Editor/2021.3.4f1/Unity.app/Contents/MacOS/Unity"
+UNITY_EDITOR_PATH="/Applications/Unity/Hub/Editor/6000.0.23f1/Unity.app/Contents/MacOS/Unity"
 
 #----------------
 CURRENT_DIR=`dirname $0`
