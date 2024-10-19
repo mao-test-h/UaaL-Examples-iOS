@@ -49,6 +49,11 @@ namespace UaaLExample.Editor
             var currentSdkVersion = PlayerSettings.iOS.sdkVersion;
             PlayerSettings.iOS.sdkVersion = sdkVersion;
 
+            if (sdkVersion == iOSSdkVersion.SimulatorSDK)
+            {
+                PlayerSettings.iOS.simulatorSdkArchitecture = AppleMobileArchitectureSimulator.Universal;
+            }
+
             void CompleteAction()
             {
                 PlayerSettings.iOS.sdkVersion = currentSdkVersion;
