@@ -29,6 +29,30 @@ namespace UaaLExample.Editor
             Debug.Log("<color=green>Build iOS (Device/Simulator)</color>");
         }
 
+        [MenuItem("Build/Build iOS (Device)")]
+        static void BuildIOSForDevice()
+        {
+            var ret = BuildIOSInternal(iOSSdkVersion.DeviceSDK);
+            if (!ret)
+            {
+                return;
+            }
+
+            Debug.Log("<color=green>Build iOS Device</color>");
+        }
+        
+        [MenuItem("Build/Build iOS (Simulator)")]
+        static void BuildIOSForSimulator()
+        {
+            var ret = BuildIOSInternal(iOSSdkVersion.SimulatorSDK);
+            if (!ret)
+            {
+                return;
+            }
+
+            Debug.Log("<color=green>Build iOS Simulator</color>");
+        }
+
         static string[] GetScenePaths
         {
             get
@@ -51,7 +75,7 @@ namespace UaaLExample.Editor
 
             if (sdkVersion == iOSSdkVersion.SimulatorSDK)
             {
-                PlayerSettings.iOS.simulatorSdkArchitecture = AppleMobileArchitectureSimulator.Universal;
+                PlayerSettings.iOS.simulatorSdkArchitecture = AppleMobileArchitectureSimulator.ARM64;
             }
 
             void CompleteAction()
