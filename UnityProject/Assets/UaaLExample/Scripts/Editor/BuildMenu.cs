@@ -45,6 +45,8 @@ namespace UaaLExample.Editor
 
         static bool BuildIOSInternal(iOSSdkVersion sdkVersion)
         {
+            PlayerSettings.iOS.simulatorSdkArchitecture = AppleMobileArchitectureSimulator.Universal;
+
             // これを変えるとビルドする度にPlayerSettingsが更新されて差分が発生するので、終わったら元の値に戻すようにしておく
             var currentSdkVersion = PlayerSettings.iOS.sdkVersion;
             PlayerSettings.iOS.sdkVersion = sdkVersion;
